@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRUMFIC - Cars that will make you dream</title>
+	<link rel="shortcut icon" href="trumfic.ico" type="image/x-icon"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Selectores de idioma */
+        .language-selector {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 10px 5px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .language-selector::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .language-selector::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .language-selector::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            background: transparent;
+            color: #333;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .language-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .language-option.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-left: 4px solid #000;
+        }
+
+        .flag {
+            width: 24px;
+            height: 18px;
+            margin-right: 8px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* Título TRUMFIC en 3D */
+        .title-3d {
+            text-align: center;
+            margin: 40px 0 60px 0;
+            perspective: 1000px;
+        }
+
+        .title-3d h1 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: bold;
+            letter-spacing: 0.2em;
+            position: relative;
+            display: inline-block;
+            color: #fff;
+            text-shadow: 
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000,
+                2px 2px 0 #000,
+                3px 3px 0 #000,
+                4px 4px 0 #000,
+                5px 5px 0 #000,
+                6px 6px 0 #000,
+                7px 7px 0 #000,
+                8px 8px 0 #000;
+            transform: rotateX(15deg) rotateY(-5deg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: rotateX(15deg) rotateY(-5deg) translateY(0px); }
+            50% { transform: rotateX(15deg) rotateY(-5deg) translateY(-10px); }
+        }
+
+        /* Contenido principal */
+        .main-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 60px 0;
+            gap: 40px;
+        }
+
+        /* Logo circular */
+        .logo-container {
+            flex: 0 0 300px;
+        }
+
+        .logo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 8px solid #2c3e50;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .logo-inner {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: #1e3d59;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-cross {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .cross-star {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: #27ae60;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        .cross-star::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #3498db;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+
+        .logo-segments {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 40px;
+        }
+
+        .segment {
+            position: absolute;
+            bottom: 0;
+            height: 30px;
+            width: 45px;
+        }
+
+        .segment.yellow {
+            left: 0;
+            background: #f1c40f;
+            border-radius: 0 0 0 20px;
+        }
+
+        .segment.red {
+            right: 0;
+            background: #e74c3c;
+            border-radius: 0 0 20px 0;
+        }
+
+        .logo-text {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            letter-spacing: 3px;
+        }
+
+        .logo-text-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            letter-spacing: 2px;
+        }
+
+        /* Eslogan */
+        .slogan-container {
+            flex: 1;
+            text-align: center;
+        }
+
+        .slogan {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            color: #333;
+            font-weight: 300;
+            line-height: 1.4;
+            letter-spacing: 0.1em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .language-selector {
+                position: relative;
+                right: auto;
+                top: auto;
+                transform: none;
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: center;
+                padding: 10px 20px;
+                flex-wrap: wrap;
+            }
+
+            .language-option {
+                margin: 0 5px;
+                padding: 8px 10px;
+            }
+
+            .main-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo-container {
+                flex: none;
+                margin-bottom: 40px;
+            }
+
+            .logo {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .title-3d {
+                margin: 20px 0 40px 0;
+            }
+
+            .logo {
+                width: 250px;
+                height: 250px;
+            }
+
+            .logo-inner {
+                width: 110px;
+                height: 110px;
+            }
+
+            .logo-cross {
+                width: 60px;
+                height: 60px;
+            }
+
+            .cross-star {
+                width: 45px;
+                height: 45px;
+            }
+
+            .logo-text {
+                font-size: 18px;
+                top: 25px;
+            }
+
+            .logo-text-bottom {
+                font-size: 16px;
+                bottom: 15px;
+            }
+
+            .language-selector {
+                flex-wrap: wrap;
+                padding: 10px;
+            }
+
+            .flag {
+                width: 20px;
+                height: 15px;
+                margin-right: 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .language-option {
+                padding: 6px 8px;
+                font-size: 10px;
+                margin: 2px;
+            }
+
+            .slogan {
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Selectores de idioma -->
+        <div class="language-selector">
+            <div class="language-option active" data-lang="en">
+                <div class="flag">🇬🇧</div>
+                <span>ENGLISH</span>
+            </div>
+            <div class="language-option" data-lang="de">
+                <div class="flag">🇩🇪</div>
+                <span>DEUTSCH</span>
+            </div>
+            <div class="language-option" data-lang="zh">
+                <div class="flag">🇨🇳</div>
+                <span>中文</span>
+            </div>
+            <div class="language-option" data-lang="hi">
+                <div class="flag">🇮🇳</div>
+                <span>हिंदी</span>
+            </div>
+            <div class="language-option" data-lang="es">
+                <div class="flag">🇪🇸</div>
+                <span>ESPAÑOL</span>
+            </div>
+            <div class="language-option" data-lang="fr">
+                <div class="flag">🇫🇷</div>
+                <span>FRANÇAIS</span>
+            </div>
+            <div class="language-option" data-lang="ca">
+                <div class="flag"><img src="bandera-catalana.png" alt="Català" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"></div>
+                <span>CATALÀ</span>
+            </div>
+            <div class="language-option" data-lang="ar">
+                <div class="flag">🇸🇦</div>
+                <span>العربية</span>
+            </div>
+            <div class="language-option" data-lang="bn">
+                <div class="flag">🇧🇩</div>
+                <span>বাংলা</span>
+            </div>
+            <div class="language-option" data-lang="pt">
+                <div class="flag">🇵🇹</div>
+                <span>PORTUGUÊS</span>
+            </div>
+            <div class="language-option" data-lang="ru">
+                <div class="flag">🇷🇺</div>
+                <span>РУССКИЙ</span>
+            </div>
+            <div class="language-option" data-lang="ur">
+                <div class="flag">🇵🇰</div>
+                <span>اردو</span>
+            </div>
+            <div class="language-option" data-lang="id">
+                <div class="flag">🇮🇩</div>
+                <span>INDONESIA</span>
+            </div>
+            <div class="language-option" data-lang="ja">
+                <div class="flag">🇯🇵</div>
+                <span>日本語</span>
+            </div>
+            <div class="language-option" data-lang="ko">
+                <div class="flag">🇰🇷</div>
+                <span>한국어</span>
+            </div>
+        </div>
+
+        <!-- Título TRUMFIC en 3D -->
+        <div class="title-3d">
+            <h1>TRUMFIC</h1>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main-content">
+            <!-- Logo circular -->
+            <div class="logo-container">
+                <img src="logo-trumfic.png" alt="TRUMFIC Logo" class="logo-img">
+            </div>
+
+            <!-- Eslogan -->
+            <div class="slogan-container">
+                <h2 class="slogan" id="slogan">CARS THAT WILL MAKE YOU DREAM</h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad del selector de idioma
+        const languageOptions = document.querySelectorAll('.language-option');
+        const slogan = document.getElementById('slogan');
+
+        const slogans = {
+            'es': 'COCHES QUE TE HARÁN SOÑAR',
+            'en': 'CARS THAT WILL MAKE YOU DREAM',
+            'de': 'AUTOS DIE DICH TRÄUMEN LASSEN',
+            'zh': '让你梦想成真的汽车',
+            'hi': 'कारें जो आपको सपने देखने पर मजबूर करें',
+            'fr': 'VOITURES QUI VOUS FERONT RÊVER',
+            'ca': 'COTXES QUE ET FARAN SOMIAR',
+            'ar': 'سيارات ستجعلك تحلم',
+            'bn': 'গাড়ি যা আপনাকে স্বপ্ন দেখাবে',
+            'pt': 'CARROS QUE TE FARÃO SONHAR',
+            'ru': 'АВТОМОБИЛИ, КОТОРЫЕ ЗАСТАВЯТ ВАС МЕЧТАТЬ',
+            'ur': 'کاریں جو آپ کو خواب دیکھنے پر مجبور کریں',
+            'id': 'MOBIL YANG AKAN MEMBUATMU BERMIMPI',
+            'ja': '夢を見させる車',
+            'ko': '꿈을 꾸게 만드는 자동차'
+        };
+
+        languageOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remover clase active de todas las opciones
+                languageOptions.forEach(opt => opt.classList.remove('active'));
+                
+                // Añadir clase active a la opción seleccionada
+                option.classList.add('active');
+                
+                // Cambiar el eslogan
+                const lang = option.getAttribute('data-lang');
+                slogan.textContent = slogans[lang];
+                
+                // Efecto de animación al cambiar
+                slogan.style.opacity = '0.5';
+                slogan.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    slogan.style.opacity = '1';
+                    slogan.style.transform = 'scale(1)';
+                }, 300);
+            });
+        });
+
+        // Efectos adicionales
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animación de entrada
+            const title = document.querySelector('.title-3d h1');
+            const logo = document.querySelector('.logo');
+            const sloganEl = document.querySelector('.slogan');
+            
+            setTimeout(() => {
+                title.style.opacity = '1';
+                title.style.transform = 'rotateX(15deg) rotateY(-5deg) translateY(0)';
+            }, 300);
+            
+            setTimeout(() => {
+                logo.style.opacity = '1';
+                logo.style.transform = 'scale(1)';
+            }, 600);
+            
+            setTimeout(() => {
+                sloganEl.style.opacity = '1';
+            }, 900);
+        });
+    </script>
+</body>
+</html>
