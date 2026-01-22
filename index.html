@@ -59,10 +59,10 @@
         .language-option {
             display: flex;
             align-items: center;
-            padding: 8px 12px;
+            padding: 8px 14px;
             margin: 5px 0;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 20px;
             transition: all 0.3s ease;
             position: relative;
             background: transparent;
@@ -74,13 +74,16 @@
         }
 
         .language-option:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(-5px);
+            background: rgba(59, 130, 246, 0.15);
         }
 
         .language-option.active {
-            background: rgba(255, 255, 255, 0.3);
-            border-left: 4px solid #000;
+            background: #3b82f6;
+            color: white;
+        }
+
+        .language-option.active:hover {
+            background: #2563eb;
         }
 
         .flag {
