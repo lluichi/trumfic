@@ -388,82 +388,62 @@
         .games-container {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 60px;
             flex-wrap: wrap;
         }
 
         .game-card {
-            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+        }
+
+        .game-icon-wrapper {
             width: 180px;
             height: 180px;
             border-radius: 20px;
             overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            text-decoration: none;
+            transition: box-shadow 0.3s ease;
         }
 
-        .game-card:hover {
-            transform: scale(1.08);
+        .game-card:hover .game-icon-wrapper {
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
         }
 
-        .game-card img {
+        .game-icon {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
 
-        .game-card:hover img {
-            transform: scale(1.05);
+        .game-card:hover .game-icon {
+            transform: scale(1.08);
         }
 
         .game-name {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
-            color: white;
-            padding: 40px 12px 12px 12px;
-            font-size: 14px;
-            font-weight: bold;
+            margin-top: 15px;
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
             text-align: center;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            max-width: 180px;
         }
 
-        .game-card:hover .game-name {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Colors de fons per als jocs */
-        .game-card.cavall {
+        /* Colors de fons per als jocs (fallback si no hi ha imatge) */
+        .game-icon-wrapper.cavall {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
-        .game-card.calculs {
+        .game-icon-wrapper.calculs {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        .game-icon-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
-            color: white;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .game-card:hover .game-icon-placeholder {
-            transform: scale(1.1);
         }
 
         @media (max-width: 768px) {
@@ -473,38 +453,37 @@
             }
 
             .games-container {
-                gap: 25px;
+                gap: 40px;
             }
 
-            .game-card {
+            .game-icon-wrapper {
                 width: 150px;
                 height: 150px;
                 border-radius: 16px;
             }
 
-            .game-icon-placeholder {
-                font-size: 60px;
-            }
-
             .game-name {
-                font-size: 12px;
-                padding: 30px 10px 10px 10px;
+                font-size: 14px;
+                max-width: 150px;
+                margin-top: 12px;
             }
         }
 
         @media (max-width: 480px) {
-            .game-card {
+            .games-container {
+                gap: 30px;
+            }
+
+            .game-icon-wrapper {
                 width: 130px;
                 height: 130px;
                 border-radius: 14px;
             }
 
-            .game-icon-placeholder {
-                font-size: 50px;
-            }
-
             .game-name {
-                font-size: 11px;
+                font-size: 13px;
+                max-width: 130px;
+                margin-top: 10px;
             }
 
             .footer-title {
@@ -601,12 +580,16 @@
         <div class="footer-games">
             <h3 class="footer-title" id="footer-title">Descobreix els nostres jocs</h3>
             <div class="games-container">
-                <a href="https://joc-cavall.trumfic.com/" class="game-card cavall" target="_blank" rel="noopener">
-                    <div class="game-icon-placeholder">&#9822;</div>
+                <a href="https://joc-cavall.trumfic.com/" class="game-card" target="_blank" rel="noopener">
+                    <div class="game-icon-wrapper cavall">
+                        <img src="icon-cavall.png" alt="El Passeig del Cavall" class="game-icon">
+                    </div>
                     <div class="game-name">El Passeig del Cavall</div>
                 </a>
-                <a href="https://calculs-pro.trumfic.com/" class="game-card calculs" target="_blank" rel="noopener">
-                    <div class="game-icon-placeholder">&#128290;</div>
+                <a href="https://calculs-pro.trumfic.com/" class="game-card" target="_blank" rel="noopener">
+                    <div class="game-icon-wrapper calculs">
+                        <img src="icon-calculs.png" alt="Càlculs" class="game-icon">
+                    </div>
                     <div class="game-name">Càlculs</div>
                 </a>
             </div>
