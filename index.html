@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRUMFIC - Cars that will make you dream</title>
+    <title>TRUMFIC - Cotxes que et faran somiar</title>
 	<link rel="shortcut icon" href="trumfic.ico" type="image/x-icon"/>
     <style>
         * {
@@ -369,13 +369,155 @@
                 padding: 0 10px;
             }
         }
+
+        /* Footer amb jocs */
+        .footer-games {
+            margin-top: 80px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+
+        .games-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .game-card {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+        }
+
+        .game-card:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .game-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+            color: white;
+            padding: 40px 12px 12px 12px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .game-card:hover .game-name {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Colors de fons per als jocs */
+        .game-card.cavall {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .game-card.calculs {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .game-icon-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover .game-icon-placeholder {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .footer-games {
+                margin-top: 60px;
+                padding: 30px 15px;
+            }
+
+            .games-container {
+                gap: 25px;
+            }
+
+            .game-card {
+                width: 150px;
+                height: 150px;
+                border-radius: 16px;
+            }
+
+            .game-icon-placeholder {
+                font-size: 60px;
+            }
+
+            .game-name {
+                font-size: 12px;
+                padding: 30px 10px 10px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-card {
+                width: 130px;
+                height: 130px;
+                border-radius: 14px;
+            }
+
+            .game-icon-placeholder {
+                font-size: 50px;
+            }
+
+            .game-name {
+                font-size: 11px;
+            }
+
+            .footer-title {
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- Selectores de idioma -->
         <div class="language-selector">
-            <div class="language-option active" data-lang="en">
+            <div class="language-option" data-lang="en">
                 <div class="flag">🇬🇧</div>
                 <span>ENGLISH</span>
             </div>
@@ -399,7 +541,7 @@
                 <div class="flag">🇫🇷</div>
                 <span>FRANÇAIS</span>
             </div>
-            <div class="language-option" data-lang="ca">
+            <div class="language-option active" data-lang="ca">
                 <div class="flag"><img src="catalan-flag.png" alt="Català" style="width: 100%; height: 100%; object-fit: cover; border-radius: 2px;"></div>
                 <span>CATALÀ</span>
             </div>
@@ -451,7 +593,22 @@
 
             <!-- Eslogan -->
             <div class="slogan-container">
-                <h2 class="slogan" id="slogan">CARS THAT WILL MAKE YOU DREAM</h2>
+                <h2 class="slogan" id="slogan">COTXES QUE ET FARAN SOMIAR</h2>
+            </div>
+        </div>
+
+        <!-- Jocs relacionats -->
+        <div class="footer-games">
+            <h3 class="footer-title" id="footer-title">Descobreix els nostres jocs</h3>
+            <div class="games-container">
+                <a href="https://joc-cavall.trumfic.com/" class="game-card cavall" target="_blank" rel="noopener">
+                    <div class="game-icon-placeholder">&#9822;</div>
+                    <div class="game-name">El Passeig del Cavall</div>
+                </a>
+                <a href="https://calculs-pro.trumfic.com/" class="game-card calculs" target="_blank" rel="noopener">
+                    <div class="game-icon-placeholder">&#128290;</div>
+                    <div class="game-name">Càlculs</div>
+                </a>
             </div>
         </div>
     </div>
@@ -460,6 +617,8 @@
         // Funcionalidad del selector de idioma
         const languageOptions = document.querySelectorAll('.language-option');
         const slogan = document.getElementById('slogan');
+        const footerTitle = document.getElementById('footer-title');
+        const gameCards = document.querySelectorAll('.game-card .game-name');
 
         const slogans = {
             'es': 'COCHES QUE TE HARÁN SOÑAR',
@@ -479,22 +638,90 @@
             'ko': '꿈을 꾸게 만드는 자동차'
         };
 
+        const footerTitles = {
+            'ca': 'Descobreix els nostres jocs',
+            'es': 'Descubre nuestros juegos',
+            'en': 'Discover our games',
+            'de': 'Entdecke unsere Spiele',
+            'zh': '探索我们的游戏',
+            'hi': 'हमारे खेल खोजें',
+            'fr': 'Découvrez nos jeux',
+            'ar': 'اكتشف ألعابنا',
+            'bn': 'আমাদের গেম আবিষ্কার করুন',
+            'pt': 'Descobre os nossos jogos',
+            'ru': 'Откройте наши игры',
+            'ur': 'ہماری گیمز دریافت کریں',
+            'id': 'Temukan permainan kami',
+            'ja': '私たちのゲームを発見',
+            'ko': '우리 게임을 발견하세요'
+        };
+
+        const gameNames = {
+            'cavall': {
+                'ca': 'El Passeig del Cavall',
+                'es': 'El Paseo del Caballo',
+                'en': "Knight's Tour",
+                'de': 'Springerproblem',
+                'zh': '骑士巡游',
+                'hi': 'नाइट की यात्रा',
+                'fr': 'Le Parcours du Cavalier',
+                'ar': 'جولة الفارس',
+                'bn': 'নাইট ট্যুর',
+                'pt': 'O Passeio do Cavalo',
+                'ru': 'Обход конём',
+                'ur': 'نائٹ ٹور',
+                'id': 'Tur Kuda',
+                'ja': 'ナイトツアー',
+                'ko': '나이트 투어'
+            },
+            'calculs': {
+                'ca': 'Càlculs',
+                'es': 'Cálculos',
+                'en': 'Calculations',
+                'de': 'Berechnungen',
+                'zh': '计算',
+                'hi': 'गणना',
+                'fr': 'Calculs',
+                'ar': 'حسابات',
+                'bn': 'গণনা',
+                'pt': 'Cálculos',
+                'ru': 'Расчёты',
+                'ur': 'حساب',
+                'id': 'Perhitungan',
+                'ja': '計算',
+                'ko': '계산'
+            }
+        };
+
         languageOptions.forEach(option => {
             option.addEventListener('click', () => {
                 // Remover clase active de todas las opciones
                 languageOptions.forEach(opt => opt.classList.remove('active'));
-                
+
                 // Añadir clase active a la opción seleccionada
                 option.classList.add('active');
-                
+
                 // Cambiar el eslogan
                 const lang = option.getAttribute('data-lang');
                 slogan.textContent = slogans[lang];
-                
+
+                // Cambiar título del footer
+                if (footerTitle && footerTitles[lang]) {
+                    footerTitle.textContent = footerTitles[lang];
+                }
+
+                // Cambiar nombres de los juegos
+                gameCards.forEach(card => {
+                    const gameType = card.closest('.game-card').classList.contains('cavall') ? 'cavall' : 'calculs';
+                    if (gameNames[gameType] && gameNames[gameType][lang]) {
+                        card.textContent = gameNames[gameType][lang];
+                    }
+                });
+
                 // Efecto de animación al cambiar
                 slogan.style.opacity = '0.5';
                 slogan.style.transform = 'scale(0.95)';
-                
+
                 setTimeout(() => {
                     slogan.style.opacity = '1';
                     slogan.style.transform = 'scale(1)';
