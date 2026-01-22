@@ -695,7 +695,8 @@
 
                 // Cambiar nombres de los juegos
                 gameCards.forEach(card => {
-                    const gameType = card.closest('.game-card').classList.contains('cavall') ? 'cavall' : 'calculs';
+                    const wrapper = card.closest('.game-card').querySelector('.game-icon-wrapper');
+                    const gameType = wrapper.classList.contains('cavall') ? 'cavall' : 'calculs';
                     if (gameNames[gameType] && gameNames[gameType][lang]) {
                         card.textContent = gameNames[gameType][lang];
                     }
