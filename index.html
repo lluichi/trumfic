@@ -431,13 +431,55 @@
             transform: scale(1.08);
         }
 
-        .game-name {
-            margin-top: 15px;
-            color: #333;
+        .game-icon-wrapper {
+            position: relative;
+        }
+
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 20px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .game-card:hover .game-overlay {
+            opacity: 1;
+        }
+
+        .game-name-overlay {
+            color: white;
             font-size: 16px;
             font-weight: 600;
             text-align: center;
+            line-height: 1.4;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .game-card:hover .game-name-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .game-description {
+            margin-top: 15px;
+            color: #333;
+            font-size: 18px;
+            font-weight: 400;
+            text-align: center;
             max-width: 180px;
+            line-height: 1.4;
         }
 
         /* Colors de fons per als jocs (fallback si no hi ha imatge) */
@@ -465,8 +507,16 @@
                 border-radius: 16px;
             }
 
-            .game-name {
+            .game-overlay {
+                border-radius: 16px;
+            }
+
+            .game-name-overlay {
                 font-size: 14px;
+            }
+
+            .game-description {
+                font-size: 12px;
                 max-width: 150px;
                 margin-top: 12px;
             }
@@ -483,8 +533,17 @@
                 border-radius: 14px;
             }
 
-            .game-name {
+            .game-overlay {
+                border-radius: 14px;
+                padding: 10px;
+            }
+
+            .game-name-overlay {
                 font-size: 13px;
+            }
+
+            .game-description {
+                font-size: 11px;
                 max-width: 130px;
                 margin-top: 10px;
             }
@@ -586,14 +645,20 @@
                 <a href="https://joc-cavall.trumfic.com/" class="game-card" target="_blank" rel="noopener">
                     <div class="game-icon-wrapper cavall">
                         <img src="icon-cavall.png" alt="El Passeig del Cavall" class="game-icon">
+                        <div class="game-overlay">
+                            <span class="game-name-overlay">El Passeig del Cavall</span>
+                        </div>
                     </div>
-                    <div class="game-name">El Passeig del Cavall</div>
+                    <div class="game-description">Aquest joc va de tenir sobretot intel·ligència</div>
                 </a>
                 <a href="https://calculs-pro.trumfic.com/" class="game-card" target="_blank" rel="noopener">
                     <div class="game-icon-wrapper calculs">
                         <img src="icon-calculs.png" alt="Càlculs" class="game-icon">
+                        <div class="game-overlay">
+                            <span class="game-name-overlay">Càlculs</span>
+                        </div>
                     </div>
-                    <div class="game-name">Càlculs</div>
+                    <div class="game-description">Aquest joc de càlculs és per millorar el teu nivell de mates</div>
                 </a>
             </div>
         </div>
@@ -604,7 +669,8 @@
         const languageOptions = document.querySelectorAll('.language-option');
         const slogan = document.getElementById('slogan');
         const footerTitle = document.getElementById('footer-title');
-        const gameCards = document.querySelectorAll('.game-card .game-name');
+        const gameNameOverlays = document.querySelectorAll('.game-name-overlay');
+        const gameDescriptionElements = document.querySelectorAll('.game-description');
 
         const slogans = {
             'es': 'COCHES QUE TE HARÁN SOÑAR',
@@ -679,6 +745,43 @@
             }
         };
 
+        const gameDescriptions = {
+            'cavall': {
+                'ca': 'Aquest joc va de tenir sobretot intel·ligència',
+                'es': 'Este juego va de tener sobre todo inteligencia',
+                'en': 'This game is mainly about intelligence',
+                'de': 'Bei diesem Spiel geht es vor allem um Intelligenz',
+                'zh': '这个游戏主要考验智力',
+                'hi': 'इस खेल में सबसे ज़रूरी है बुद्धि',
+                'fr': "Ce jeu repose avant tout sur l'intelligence",
+                'ar': 'هذه اللعبة تعتمد بشكل أساسي على الذكاء',
+                'bn': 'এই খেলাটি মূলত বুদ্ধির উপর নির্ভরশীল',
+                'pt': 'Este jogo é principalmente sobre inteligência',
+                'ru': 'Эта игра прежде всего требует интеллекта',
+                'ur': 'اس کھیل میں سب سے اہم ذہانت ہے',
+                'id': 'Permainan ini terutama tentang kecerdasan',
+                'ja': 'このゲームは主に知性が問われます',
+                'ko': '이 게임은 주로 지능이 중요합니다'
+            },
+            'calculs': {
+                'ca': 'Aquest joc de càlculs és per millorar el teu nivell de mates',
+                'es': 'Este juego de cálculos es para mejorar tu nivel de mates',
+                'en': 'This calculation game is to improve your math skills',
+                'de': 'Dieses Rechenspiel verbessert dein Mathe-Niveau',
+                'zh': '这个计算游戏可以提高你的数学水平',
+                'hi': 'यह गणित खेल आपके गणित स्तर को सुधारने के लिए है',
+                'fr': 'Ce jeu de calculs est pour améliorer ton niveau en maths',
+                'ar': 'هذه لعبة حسابية لتحسين مستواك في الرياضيات',
+                'bn': 'এই গণনার খেলাটি তোমার গণিতের স্তর উন্নত করতে',
+                'pt': 'Este jogo de cálculos é para melhorar o teu nível de matemática',
+                'ru': 'Эта игра с расчётами для улучшения твоего уровня математики',
+                'ur': 'یہ حساب کا کھیل آپ کی ریاضی کی سطح بہتر کرنے کے لیے ہے',
+                'id': 'Permainan hitung ini untuk meningkatkan kemampuan matematikamu',
+                'ja': 'この計算ゲームは数学力を向上させるためのものです',
+                'ko': '이 계산 게임은 수학 실력을 향상시키기 위한 것입니다'
+            }
+        };
+
         languageOptions.forEach(option => {
             option.addEventListener('click', () => {
                 // Remover clase active de todas las opciones
@@ -696,12 +799,22 @@
                     footerTitle.textContent = footerTitles[lang];
                 }
 
-                // Cambiar nombres de los juegos
-                gameCards.forEach(card => {
-                    const wrapper = card.closest('.game-card').querySelector('.game-icon-wrapper');
+                // Cambiar nombres de los juegos (overlay)
+                gameNameOverlays.forEach(nameEl => {
+                    const wrapper = nameEl.closest('.game-icon-wrapper');
                     const gameType = wrapper.classList.contains('cavall') ? 'cavall' : 'calculs';
                     if (gameNames[gameType] && gameNames[gameType][lang]) {
-                        card.textContent = gameNames[gameType][lang];
+                        nameEl.textContent = gameNames[gameType][lang];
+                    }
+                });
+
+                // Cambiar descripciones de los juegos (debajo del icono)
+                gameDescriptionElements.forEach(desc => {
+                    const card = desc.closest('.game-card');
+                    const wrapper = card.querySelector('.game-icon-wrapper');
+                    const gameType = wrapper.classList.contains('cavall') ? 'cavall' : 'calculs';
+                    if (gameDescriptions[gameType] && gameDescriptions[gameType][lang]) {
+                        desc.textContent = gameDescriptions[gameType][lang];
                     }
                 });
 
